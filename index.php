@@ -1,3 +1,26 @@
+<?php
+    //Funzione
+    function generaPassword($length) {
+        $caratteri = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*_+-=;:,.<>?';
+        $password = '';
+        $caratteriLunghezza = strlen($caratteri);
+        
+        for ($i = 0; $i < $length; $i++) {
+            $password .= $caratteri[rand(0, $caratteriLunghezza - 1)];
+        }
+
+        return $password;
+    }
+
+    //stampa password
+    if (isset($_GET['length'])) {
+        $lunghezza = intval($_GET['length']);
+        if ($lunghezza > 0) {
+            $passwordGenerata = generaPassword($lunghezza);
+        }
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,12 +41,27 @@
 
         <!-- Form -->
         <div>
-            <form method="GET">
+            <form action='index.php' method="GET">
             <label for="length">Lunghezza password:</label>
-            <input type="number" id="length" id="length" min="1" required>
-            <button type="button" class="btn btn-dark">Invio</button>
+            <input type="number" id="length" name="length" placeholder='Scegli il numero di carat.' min="1" required>
+            <button type="submit" class="btn btn-dark">Invio</button>
             </form>
         </div>
+
+        <div>
+            <p>
+                Password generata:
+                <strong>
+                    <?php
+                        echo $passwordGenerata;
+                    ?>
+                </strong>
+            </p>
+        </div>
+
+        <?php
+
+        ?>
     
 </body>
 </html>
